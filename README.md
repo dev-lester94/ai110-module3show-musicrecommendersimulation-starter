@@ -103,11 +103,30 @@ Paste a sample of your recommender's output here as a text block so a reader can
 
 ```
 # e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+    # Starter example profile.
+    # Keys match the UserProfile schema: favorite_genre, favorite_mood,
+    # target_energy, likes_acoustic.
+    user_prefs = {
+        "favorite_genre": "pop",
+        "favorite_mood": "happy",
+        "target_energy": 0.8,
+        "likes_acoustic": False,
+    }
+
+Sunrise City - Score: 96.40
+Because: Genre matches your favorite (pop); Mood matches your favorite (happy); Energy (0.82) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Gym Hero - Score: 69.00
+Because: Genre matches your favorite (pop); Energy (0.93) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Rooftop Lights - Score: 58.00
+Because: Mood matches your favorite (happy); Energy (0.76) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Honeyed Strings - Score: 48.40
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Tambourine Heart - Score: 45.60
+Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.80); Matches your preference for non-acoustic tracks
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
