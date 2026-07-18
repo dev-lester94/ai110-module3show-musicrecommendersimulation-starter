@@ -54,6 +54,12 @@ Acoustiness value | Score
 
 After everything is calculated, the song will have a final score out of 100. The recommender will then compare each of the song's score and will recommend the top k songs with the highest scores and sorted in decending order. 
 
+Again the potential bias for our recommendation system is that it priortizes genre over mood. Sometimes a user would wants to listen to an indie pop happy song but it can be outranked by a rock intense  song since rock is the genre they liked. Another bias is genre and mood are exact matching. If a user likes pop and a song is folk pop the folk pop will get outranked by the pop song since folk pop does not exactly match with pop. And akso some inconsistency on scoring such as if genre and mood does not exactly match it goes to 0 while target_energy and liked_acoustiness drops gradually.
+
+### Data Flow
+
+See [diagram.md](diagram.md) for a Mermaid diagram of the data flow (Input → Process → Output).
+
 ---
 
 ## Getting Started

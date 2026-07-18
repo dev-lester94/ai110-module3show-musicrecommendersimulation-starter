@@ -9,14 +9,25 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
+from pathlib import Path
+
 from recommender import load_songs, recommend_songs
+
+SONGS_CSV = Path(__file__).resolve().parent.parent / "data" / "songs.csv"
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs(str(SONGS_CSV))
 
-    # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
+    # Starter example profile.
+    # Keys match the UserProfile schema: favorite_genre, favorite_mood,
+    # target_energy, likes_acoustic.
+    user_prefs = {
+        "favorite_genre": "pop",
+        "favorite_mood": "happy",
+        "target_energy": 0.8,
+        "likes_acoustic": False,
+    }
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
