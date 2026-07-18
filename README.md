@@ -17,26 +17,42 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
-
 Major streaming platforms like Spotify uses a combination of collaborative filtering and content based-filtering to recommend songs to users. Collaborative filtering recommends songs based across many user's behavior such as if a song is being listened by millions of viewers then it would recommended to other users like you. Content-base filtering compares the attributes of a song (i.e. genre) and compares that to the user profiles of what they like. In this project, we will be focusing on purely content-based filtering. We do not have a notion of other users. And are given classes and methods that describes a song and user preferences and scoring them.
 
 Song class can be broken down into three categories. Energy, tempo_bpm, valence, danceability, acousticness are continuous audio features where they are numerical values that represent measureable characteristics of a song. Genre, mood, artist are categorical tags where they label a song for classification and are not numerical. Id and title are metadata to help identify a song.
 
 The UserProfile class stores the user's music preferences, such as favorite_genre, favorite_mood, target_energy, and likes_acoustic. These preferences may be collected explicitly during onboarding or inferred from the user's listening history by analyzing and averaging the features of songs they have liked. This profile is used to recommend songs that best match the user's tastes.
 
+The Recommender computes a score of a song if it matches the user profile preference. In my first iteration of the recommender, I'll first look at genre preference and giving a score of +35 if match and +0 if it does not. For mood, it is very similar but I'll give +25 if match and +0 if not. I choose to do this because I feel genre helps narrow down the musical style than mood does as it is broader. For target energy I would have to take the absolute value and difference of it and the song and the more smaller difference the more points we give out. The max score is +20 and goes down to 0.
 
+For target energy score:
+diff <= 0.1 -> 20
+diff <= 0.2 -> 15
+diff <= 0.3 -> 10
+diff <= 0.4 -> 5
+diff <= 0.5 -> 0
 
+The last preference like_acoustic gets match with the song accoustiness value. We will always compute a score of +20 and goes down to 0 but the score will be computed differently if the like_acoustic is true or false.
+
+For like_acoustic score if true:
+song.acousticness * 20
+Acoustiness value | Score
+1.0	| 20
+0.8	| 16
+0.5	| 10
+0.2	| 4
+0.0	| 0
+
+For like_acoustic score if false:
+(1 - song.acousticness) * 20
+Acoustiness value | Score
+0.0 |	20
+0.2	| 16
+0.5	| 10
+0.8	| 4
+1.0	| 0
+
+After everything is calculated, the song will have a final score out of 100. The recommender will then compare each of the song's score and will recommend the top k songs with the highest scores and sorted in decending order. 
 
 ---
 
