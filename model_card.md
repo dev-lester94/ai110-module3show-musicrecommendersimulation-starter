@@ -5,6 +5,9 @@
 Give your model a short, descriptive name.  
 Example: **VibeFinder 1.0**  
 
+VibeFinder 1.0
+
+
 ---
 
 ## 2. Intended Use  
@@ -16,6 +19,18 @@ Prompts:
 - What kind of recommendations does it generate  
 - What assumptions does it make about the user  
 - Is this for real users or classroom exploration  
+
+**Intended Use**
+- Recommend music based on user preferences.
+- Help users discover songs similar to their tastes.
+
+**Non-Intended Use**
+- Predict a person's personality or emotions.
+- Make important decisions about people.
+- Recommend songs that are not in the dataset.
+
+This recommender suggests songs that best match a user's music preferences. It ranks songs based on how similar they are to the user's favorite genre, mood, and audio features.
+
 
 ---
 
@@ -32,6 +47,8 @@ Prompts:
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
+The dataset contains songs with metadata and audio features. Metadata includes the title, artist, genre, and mood. Audio features include energy, valence, danceability, acousticness, and tempo. The recommender can only suggest songs that are already in the dataset.
+
 ---
 
 ## 4. Data  
@@ -45,6 +62,8 @@ Prompts:
 - Did you add or remove data  
 - Are there parts of musical taste missing in the dataset  
 
+The recommender compares each song to the user's profile. Songs receive points for matching the user's preferred genre and mood. It also compares numerical audio features like energy and acousticness. Songs with the highest total scores are recommended first.
+
 ---
 
 ## 5. Strengths  
@@ -56,6 +75,9 @@ Prompts:
 - User types for which it gives reasonable results  
 - Any patterns you think your scoring captures correctly  
 - Cases where the recommendations matched your intuition  
+
+The recommender works best when the user's favorite genre exists in the dataset. Because genre and mood require exact matches, it may miss songs from similar genres. It also cannot recommend new or missing songs that are not included in the dataset.
+
 
 ---
 
@@ -69,6 +91,9 @@ Prompts:
 - Genres or moods that are underrepresented  
 - Cases where the system overfits to one preference  
 - Ways the scoring might unintentionally favor some users  
+
+The recommender works best when the user's favorite genre exists in the dataset. Because genre and mood require exact matches, it may miss songs from similar genres. It also cannot recommend new or missing songs that are not included in the dataset.
+
 
 ---
 
@@ -85,6 +110,9 @@ Prompts:
 
 No need for numeric metrics unless you created some.
 
+I tested the recommender with different user profiles and compared the recommended songs to the users' preferences. I also changed individual preferences, such as genre and energy, to make sure the recommendations changed as expected.
+
+
 ---
 
 ## 8. Future Work  
@@ -98,6 +126,10 @@ Prompts:
 - Improving diversity among the top results  
 - Handling more complex user tastes  
 
+## Ideas for Improvement
+- Support similar genres instead of only exact genre matches.
+- Learn from user feedback to improve future recommendations.
+- Use a larger and more diverse music dataset.
 ---
 
 ## 9. Personal Reflection  
