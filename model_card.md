@@ -2,11 +2,7 @@
 
 ## 1. Model Name  
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
-
-VibeFinder 1.0
-
+Les Find Music Finder 1.0
 
 ---
 
@@ -14,23 +10,9 @@ VibeFinder 1.0
 
 Describe what your recommender is designed to do and who it is for. 
 
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
-
-**Intended Use**
-- Recommend music based on user preferences.
-- Help users discover songs similar to their tastes.
-
-**Non-Intended Use**
-- Predict a person's personality or emotions.
-- Make important decisions about people.
-- Recommend songs that are not in the dataset.
-
-This recommender suggests songs that best match a user's music preferences. It ranks songs based on how similar they are to the user's favorite genre, mood, and audio features.
-
+It recommends songs based off exact genre and mood, and also energy level and acoustiness of user's preferences.
+It assumes that the user has already set their preference upon rumnning the app.
+This is not design for real users. It is more for classroom exploration.
 
 ---
 
@@ -38,16 +20,14 @@ This recommender suggests songs that best match a user's music preferences. It r
 
 Explain your scoring approach in simple language.  
 
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
-
-The dataset contains songs with metadata and audio features. Metadata includes the title, artist, genre, and mood. Audio features include energy, valence, danceability, acousticness, and tempo. The recommender can only suggest songs that are already in the dataset.
+The features we use for the songs are genre, mood, energy, and accoustiness. 
+The features we use for user preferences are liked_genre, liked_mood, energy level, and liked_accoustiness. 
+For scoring, we score a song out of 100 points with 4 criterias. 
+  It compares the exact match of the users liked_genre to the songs genre.
+  It compares the exact match of the users liked_mood to the songs mood
+  It compares the energy of the song to the users energy level by taking the absolute difference of the two. The smallest difference of <= 0.1 gives the maximum points.
+  It compares the accoustiness of a song to the users liked_accoustiness. Depending on the users liked_accoustiness boolean value we calculate the score differently.
+After scoring, we get the top 5 songs with the highest score and present them in decending order
 
 ---
 
@@ -55,14 +35,10 @@ The dataset contains songs with metadata and audio features. Metadata includes t
 
 Describe the dataset the model uses.  
 
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
-
-The recommender compares each song to the user's profile. Songs receive points for matching the user's preferred genre and mood. It also compares numerical audio features like energy and acousticness. Songs with the highest total scores are recommended first.
+There are a little over 20 songs in the catalog.
+Genres included are rock, pop, folk pop, and etc
+I did not remove any of the the orginal songs given but added > 10 more songs later.
+I would say their are genres like classical that are missing in the data
 
 ---
 
@@ -70,13 +46,10 @@ The recommender compares each song to the user's profile. Songs receive points f
 
 Where does your system seem to work well  
 
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
-
-The recommender works best when the user's favorite genre exists in the dataset. Because genre and mood require exact matches, it may miss songs from similar genres. It also cannot recommend new or missing songs that are not included in the dataset.
+In my default scoring mechanism, matching genre makes a big impact of whether a song is recommended. 
+So a user type where genre match and close energy and accuostiness but not mood can give a reasonable result.
+Inversely, if song genre does not match it will score low and not get recommended
+I knew genre would make a huge impact in getting songs recommended. But I was really surprise it beated songs by a landslide.
 
 
 ---
@@ -85,14 +58,11 @@ The recommender works best when the user's favorite genre exists in the dataset.
 
 Where the system struggles or behaves unfairly. 
 
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
-
-The recommender works best when the user's favorite genre exists in the dataset. Because genre and mood require exact matches, it may miss songs from similar genres. It also cannot recommend new or missing songs that are not included in the dataset.
+Assuming the test was done with my default scoring mechanism,
+Genre again is very impactful.
+Between genre and mood, mood is definitely underrepresented.
+A perfect score in energy can still be beaten by a song who genre match but the energy does not match.
+If the genre matches and there is one song for that genre then that song will get recommended always.
 
 
 ---
@@ -108,9 +78,13 @@ Prompts:
 - What surprised you  
 - Any simple tests or comparisons you ran  
 
-No need for numeric metrics unless you created some.
-
-I tested the recommender with different user profiles and compared the recommended songs to the users' preferences. I also changed individual preferences, such as genre and energy, to make sure the recommendations changed as expected.
+Tested profile with default scoring mechanism:
+ Genre-vs-mood conflict
+     Genre therotically beats mood. The ceiling for genre vs mood (75 vs 65)
+  Near-miss compound genre user_prefs
+    Result:
+  Self-contradictory taste user_prefs 
+    Genre  was so strong that songs with matching genre trumps 
 
 
 ---
