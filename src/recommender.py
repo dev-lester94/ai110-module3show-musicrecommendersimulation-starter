@@ -80,12 +80,16 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     """
     Scores a single song against user preferences.
     Required by recommend_songs() and src/main.py
+
+    EXPERIMENT: energy doubled, genre halved (rounded to 15) — see README
+    Experiments section. Original weights kept below, commented out.
     """
     reasons = []
 
     genre_score = 0
     if song["genre"] == user_prefs["favorite_genre"]:
-        genre_score = 35
+        genre_score = 35  # original weight
+        # genre_score = 15   # experimental weight, see README Experiments section
         reasons.append(f"Genre matches your favorite ({song['genre']})")
 
     mood_score = 0
@@ -94,6 +98,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         reasons.append(f"Mood matches your favorite ({song['mood']})")
 
     energy_diff = abs(song["energy"] - user_prefs["target_energy"])
+    # Original banding (max 20), commented out for the experiment:
     if energy_diff <= 0.1:
         energy_score = 20
     elif energy_diff <= 0.2:
@@ -104,6 +109,18 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         energy_score = 5
     else:
         energy_score = 0
+
+    #Experiment: energy doubled (max 40), see README Experiments section
+    # if energy_diff <= 0.1:
+    #     energy_score = 40
+    # elif energy_diff <= 0.2:
+    #     energy_score = 30
+    # elif energy_diff <= 0.3:
+    #     energy_score = 20
+    # elif energy_diff <= 0.4:
+    #     energy_score = 10
+    # else:
+    #     energy_score = 0
     if energy_score > 0:
         reasons.append(
             f"Energy ({song['energy']:.2f}) is close to your target ({user_prefs['target_energy']:.2f})"

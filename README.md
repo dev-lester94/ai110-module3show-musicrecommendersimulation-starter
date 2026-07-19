@@ -127,6 +127,77 @@ Because: Mood matches your favorite (happy); Energy (0.63) is close to your targ
 
 Tambourine Heart - Score: 45.60
 Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+
+Stress Test with Diverse Profiles
+# 1. Genre-vs-mood conflict
+{"favorite_genre": "rock", "favorite_mood": "happy", "target_energy": 0.9, "likes_acoustic": False}
+
+Top recommendations:
+
+Storm Runner - Score: 73.00
+Because: Genre matches your favorite (rock); Energy (0.91) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Sunrise City - Score: 61.40
+Because: Mood matches your favorite (happy); Energy (0.82) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Rooftop Lights - Score: 53.00
+Because: Mood matches your favorite (happy); Energy (0.76) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Honeyed Strings - Score: 43.40
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Tambourine Heart - Score: 40.60
+Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.90); Matches your preference for non-acoustic track
+
+
+# 2. Near-miss compound genre
+{"favorite_genre": "pop", "favorite_mood": "happy", "target_energy": 0.6, "likes_acoustic": True}
+
+Top recommendations:
+
+Sunrise City - Score: 73.60
+Because: Genre matches your favorite (pop); Mood matches your favorite (happy); Energy (0.82) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Tambourine Heart - Score: 59.40
+Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Sunlit Porch - Score: 58.60
+Because: Mood matches your favorite (happy); Energy (0.58) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Copper Skies - Score: 58.00
+Because: Mood matches your favorite (happy); Energy (0.60) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Honeyed Strings - Score: 56.60
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.60); Matches your preference for acoustic tracks
+
+
+# 4. Self-contradictory taste
+{"favorite_genre": "rock", "favorite_mood": "intense", "target_energy": 0.9, "likes_acoustic": True}
+
+Storm Runner - Score: 82.00
+Because: Genre matches your favorite (rock); Mood matches your favorite (intense); Energy (0.91) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Gym Hero - Score: 46.00
+Because: Mood matches your favorite (intense); Energy (0.93) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Tambourine Heart - Score: 24.40
+Because: Energy (0.62) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Sunrise City - Score: 23.60
+Because: Energy (0.82) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Rooftop Lights - Score: 22.00
+Because: Energy (0.76) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Three takeaways from doing the stress test.
+
+Genre is structually undefeatable. If we compare the celings for genre vs mood, the maximum score is 75 (genre match / mood mismatch) vs 65 (mood match / genre not match). Since 75 > 65, a genre-only match can never lose to a mood-only match, no matter how perfectly the mood song nails energy and acoustic. Test 1 confirms this isn't theoretical — Storm Runner is intense while the user wants happy (the literal opposite mood), and it still wins by 11.6 points over the genuinely happy Sunrise City. 
+
+Genre can beat a perfect score on another dimension entirely. Looking at Test 2 more closely, User preference has a target_energy=0.6 and Copper Skies has its own energy=0.60. That's a perfect, zero-distance energy match (+20, the max). It still loses to Sunrise City by 15.6 points (58.00 vs 73.60), because Sunrise City's exact "pop" genre match (+35) outweighs Copper Skies' perfect energy fit combined with its near-miss "acoustic pop" genre (+0). 
+
+Storm Runner is the only rock song in the entire catalog. Any profile with favorite_genre = "rock" will recommend Storm Runner on top due to the genre category being weighted too strong. I should definitely add more rock songs next time.
+
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
@@ -135,11 +206,116 @@ Because: Mood matches your favorite (happy); Energy (0.62) is close to your targ
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+In my experiment, I made the genre give a maximum of +15 points and energy to a max of +40 points and gradually go down by 10 by a difference of 0.1 still.
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+user_prefs = {
+    "favorite_genre": "pop",
+    "favorite_mood": "happy",
+    "target_energy": 0.8,
+    "likes_acoustic": False,
+}
+
+Top recommendations:
+
+Sunrise City - Score: 96.40
+Because: Genre matches your favorite (pop); Mood matches your favorite (happy); Energy (0.82) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Rooftop Lights - Score: 78.00
+Because: Mood matches your favorite (happy); Energy (0.76) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Gym Hero - Score: 64.00
+Because: Genre matches your favorite (pop); Energy (0.93) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Honeyed Strings - Score: 63.40
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+Tambourine Heart - Score: 60.60
+Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.80); Matches your preference for non-acoustic tracks
+
+#Stress Test with Diverse Profiles
+#1. Genre-vs-mood conflict
+user_prefs = {
+    "favorite_genre": "rock",
+    "favorite_mood": "happy",
+    "target_energy": 0.9,
+    "likes_acoustic": False
+}
+
+Top recommendations:
+
+Sunrise City - Score: 81.40
+Because: Mood matches your favorite (happy); Energy (0.82) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Storm Runner - Score: 73.00
+Because: Genre matches your favorite (rock); Energy (0.91) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Rooftop Lights - Score: 68.00
+Because: Mood matches your favorite (happy); Energy (0.76) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Gym Hero - Score: 59.00
+Because: Energy (0.93) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+Honeyed Strings - Score: 53.40
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.90); Matches your preference for non-acoustic tracks
+
+#2. Near-miss compound genre
+user_prefs = {
+    "favorite_genre": "pop",
+    "favorite_mood": "happy",
+    "target_energy": 0.6,
+    "likes_acoustic": True
+}
+
+Top recommendations:
+
+Tambourine Heart - Score: 79.40
+Because: Mood matches your favorite (happy); Energy (0.62) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Sunlit Porch - Score: 78.60
+Because: Mood matches your favorite (happy); Energy (0.58) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Copper Skies - Score: 78.00
+Because: Mood matches your favorite (happy); Energy (0.60) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Honeyed Strings - Score: 76.60
+Because: Mood matches your favorite (happy); Energy (0.63) is close to your target (0.60); Matches your preference for acoustic tracks
+
+Sunrise City - Score: 63.60
+Because: Genre matches your favorite (pop); Mood matches your favorite (happy); Energy (0.82) is close to your target (0.60); Matches your preference for acoustic tracks
+
+
+#4. Self-contradictory taste
+user_prefs = {
+    "favorite_genre": "rock",
+    "favorite_mood": "intense",
+    "target_energy": 0.9,
+    "likes_acoustic": True
+}
+
+Top recommendations:
+
+Storm Runner - Score: 82.00
+Because: Genre matches your favorite (rock); Mood matches your favorite (intense); Energy (0.91) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Gym Hero - Score: 66.00
+Because: Mood matches your favorite (intense); Energy (0.93) is close to your target (0.90); Matches your preferencefor acoustic tracks
+
+Sunrise City - Score: 43.60
+Because: Energy (0.82) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Rooftop Lights - Score: 37.00
+Because: Energy (0.76) is close to your target (0.90); Matches your preference for acoustic tracks
+
+Night Drive Loop - Score: 34.40
+Because: Energy (0.75) is close to your target (0.90); Matches your preference for acoustic track
+
+From this experiment, I saw the reverse where the mood in theory will beat genre now. The ceiling for mood match with 85 points beats ceiling for genre with 75 points. We can see this in stress test 1 where Sunrise City beats Storm Runner (81.40 to 73.00) vs the original result where Storm Runner beats Sunrise City (73.00 to 61.40).
+
+I also saw that a perfect match in a criteria made a big impact in getting a song recommended. In Stress test 2 Copper Skies has a perfect, zero-distance energy match to the target. Under the old weights it scored only 58.00 and lost to Sunrise City's exact-but-poorly-fit genre match (73.60). Under the new weights, Copper Skies jumps to 78.00 and now beats Sunrise City (63.60) outright — genuinely nailing energy now outweighs an exact genre label with a bad energy fit. 
+
+I saw that energy alone can carry a song while I made genre nearly irrelavent. In stress test 1, I saw that Gym Hero it matches neither genre nor mood, yet still scores 59.00 (40 energy + 19 acoustic), nearly rivaling genre-matched Storm Runner. Genre's max contribution is now much smaller (15) and arugbly the weakness criteria in scoring the song. It could be seens an over correction in our system.
+
+And I saw despite these changes, in stress test 4 Storm Runner scores exactly 82.00 in both test. Old genre max + energy max (35 + 20 = 55) vs New genre max + new energy max (15 + 40 = 55). This change in criterion had zero effect where song did match exactly with genre and lands in the same energy band. We just reshuffled how the points were calculated.
 
 ---
 
@@ -154,6 +330,12 @@ Examples:
 - It might over favor one genre or mood
 
 You will go deeper on this in your model card.
+
+The system has a bias against users who perfer calm music. If the user has an energy preference of 0.17 or below, then a song can never reach the max potential energy score because the lowest energy song is 0.28 (SpaceWalks Thoughts).
+
+A majority of genres (rock, jazz, indie pop, etc.) have one song. This means if the user preference matches one of those genres, then they have a huge lead in being recommended. They feel like uncontested "winners".
+
+Since genre is being match exactly, then songs with related genres would not be recommended. For an example, if a user likes pop and a song is folk pop then the song would not get points for the genre criteria as it is not exactly "pop". It gets hung up recommending the same handful of songs and has no way for users to widen their exposure to songs in related genres.
 
 ---
 

@@ -20,7 +20,8 @@ def main() -> None:
     songs = load_songs(str(SONGS_CSV))
 
     # Starter example profile.
-    # Keys match the UserProfile schema: favorite_genre, favorite_mood,
+    # Keys match the UserProfile schema
+    # : favorite_genre, favorite_mood,
     # target_energy, likes_acoustic.
     user_prefs = {
         "favorite_genre": "pop",
@@ -28,6 +29,31 @@ def main() -> None:
         "target_energy": 0.8,
         "likes_acoustic": False,
     }
+
+    #Stress Test with Diverse Profiles
+    # 1. Genre-vs-mood conflict
+    # user_prefs = {
+    #     "favorite_genre": "rock",
+    #     "favorite_mood": "happy",
+    #     "target_energy": 0.9,
+    #     "likes_acoustic": False
+    # }
+
+    # 2. Near-miss compound genre
+    # user_prefs = {
+    #     "favorite_genre": "pop",
+    #     "favorite_mood": "happy",
+    #     "target_energy": 0.6,
+    #     "likes_acoustic": True
+    # }
+
+    # 4. Self-contradictory taste
+    # user_prefs = {
+    #     "favorite_genre": "rock",
+    #     "favorite_mood": "intense",
+    #     "target_energy": 0.9,
+    #     "likes_acoustic": True
+    # }
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
