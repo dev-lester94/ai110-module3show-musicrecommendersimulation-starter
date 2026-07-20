@@ -80,27 +80,20 @@ Prompts:
 
 Tested profile with default scoring mechanism:
  Genre-vs-mood conflict
-     Genre therotically beats mood. The ceiling for genre vs mood (75 vs 65)
+     Genre therotically and with real results beats mood. The theroically ceiling for genre vs mood (85 vs 75). And the real results were 81.40 vs 73.00.
   Near-miss compound genre user_prefs
-    Result:
+    Song that have matching everything except energy or accoustiness gets beaten by songs that have matching genre/mood
   Self-contradictory taste user_prefs 
-    Genre  was so strong that songs with matching genre trumps 
+    Genre was so strong that song with same genre but contradictory accoustiness was able to score high and be recommenended.
 
 
 ---
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
+Ideas for how you would improve the model next.   
 
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
-
-## Ideas for Improvement
+Ideas for Improvement
 - Support similar genres instead of only exact genre matches.
 - Learn from user feedback to improve future recommendations.
 - Use a larger and more diverse music dataset.
@@ -110,8 +103,8 @@ Prompts:
 
 A few sentences about your experience.  
 
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+  This was an awesome classroom project.
+  I never build a recomender system before.
+  It was cool planning and implementing a way to score songs and then recommend them.
+  It allowed me to become a better engineer where I was more of a senior rather than a junior one.
+  After working on this, I feel if making a real one for the users then we need to do a bit more research and planning to how to score the songs.
